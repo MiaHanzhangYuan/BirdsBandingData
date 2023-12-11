@@ -1,0 +1,56 @@
+Project BIRD {
+  database_type: 'PostgreSQL'
+  Note: '''
+    # My final project for data engineering class
+  '''
+}
+Table bird as B {
+band                varchar [pk]
+event_year           int [pk]
+event_month          int [pk]
+event_day          int [pk]
+iso_subdivision     varchar
+lat_dd             float
+lon_dd             float
+age_code           float
+sex_code           float
+species_id           int
+eventcode         varchar
+  note: "bird banding data"
+}
+Table species as S{
+species_id        int [pk]
+alpha_code       varchar
+species_name     varchar
+sci_name         varchar
+recomendsize     varchar
+allowablesize    varchar
+endangered       varchar
+raptor           varchar
+gamebird         varchar
+bbl_grp          varchar
+  note: "species data"
+}
+Table sex as SD{
+sex_code            int [pk]
+sex_description    varchar
+  note: "sex description"
+}
+Table age as A{
+age_code             int [pk]
+age_alpha_code      varchar
+age_description     varchar
+age_explain_text    varchar
+	note:"age information"
+}
+Table inexact_dates as ID{
+eventcode       varchar [pk]
+inexact_date_description    varchar 
+	note:"inexact dates information"
+}
+
+
+Ref: SD.sex_code > B.sex_code 
+Ref: S.species_id > B.species_id
+Ref: A.age_code > B.age_code
+Ref: B.eventcode > ID.eventcode
